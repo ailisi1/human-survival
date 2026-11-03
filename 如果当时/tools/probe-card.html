@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>卷三 · 单卡截图探针（不上线）</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+  window.__RUGO_DEBUG__ = true;
+  // 用法：tools/probe-card.html#q103  —— 把指定题号渲染成真实卡片
+  window.__CARD_ID__ = (location.hash.replace("#", "") || "q103");
+</script>
+
+<script src="../data/pack-start.js"></script>
+<script src="../data/pack-events.js"></script>
+<script src="../data/pack-more.js"></script>
+<script src="../data/pack-more2.js"></script>
+<script src="../data/pack-more3.js"></script>
+<script src="../data/pack-more4.js"></script>
+<script src="../data/pack-more5.js"></script>
+<script src="../data/pack-more6.js"></script>
+<script src="../data/pack-more7.js"></script>
+<script src="../data/pack-more8.js"></script>
+<script src="../data/pack-more9.js"></script>
+<script src="../js/engine.js"></script>
+<script src="../js/ui.js"></script>
+
+<script>
+(function () {
+  var R = window.RUGO, U = window.RUGO_UI, id = window.__CARD_ID__;
+  var card = null;
+  for (var i = 0; i < window.PACK_START.length; i++) {
+    if (window.PACK_START[i].id === id) { card = window.PACK_START[i]; break; }
+  }
+  if (!card) {
+    document.getElementById("app").innerHTML =
+      '<div class="screen"><div class="inner"><div class="qcard"><div class="qtitle">找不到 ' + id + '</div></div></div></div>';
+    return;
+  }
+  var s = R.newState(20261101);
+  R.start(s);
+  s.deck = [card];
+  s.deckIndex = 0;
+  s.card = card;
+  s.cardKind = "card";
+  s.picked = null;
+  s.beatIndex = 0;
+  s.life.age = 34;
+  U.setState(s);
+  U.renderCard();
+})();
+</script>
+</body>
+</html>

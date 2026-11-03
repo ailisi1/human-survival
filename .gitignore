@@ -1,0 +1,18 @@
+# 构建产物：上线时由 `node portal/pack-deploy.js` 现生成，不进仓库
+_deploy/
+
+# 会话与工程数据
+.workbuddy/
+node_modules/
+
+# 图标设计废稿目录（含 _ai-drafts，共约 3.5 MB，页面零引用）
+生在何朝/assets/icon/
+
+# 无头截图存档
+生在何朝/minigame/shots/
+生在何朝/tools/shot-*.png
+如果当时/shots/
+
+# 系统文件
+.DS_Store
+Thumbs.db

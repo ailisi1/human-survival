@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>卷三 · 截图探针（不上线）</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+  window.__RUGO_DEBUG__ = true;
+  var MODE = location.hash.replace("#", "") || "collect";
+  // 预置几个已解锁结局，看"已得/未得"混排的效果
+  try {
+    localStorage.setItem("rugo-collection-v1", JSON.stringify([
+      "把日子过成了诗", "一路向前的追梦人", "谁都不欠，谁也不亲", "平凡而滚烫的一生"
+    ]));
+  } catch (e) {}
+</script>
+
+<script src="../data/pack-start.js"></script>
+<script src="../data/pack-events.js"></script>
+<script src="../data/pack-more.js"></script>
+<script src="../js/engine.js"></script>
+<script src="../js/ui.js"></script>
+
+<script>
+(function () {
+  var R = window.RUGO, U = window.RUGO_UI;
+
+  function playOnce(seed) {
+    var s = R.newState(seed);
+    R.start(s);
+    var g = 0;
+    while (!R.isDone(s) && g++ < 500) {
+      var c = R.currentCard(s);
+      if (!c) break;
+      if (R.isEvent(s) || R.isChain(s)) {
+        R.pickEventOption(s, c.options[Math.floor(s.rng() * c.options.length)].key);
+        R.nextCard(s);
+      } else if (!s.picked) {
+        if (R.isMulti(s)) {
+          var ks = c.items.map(function (x) { return x.key; });
+          for (var i = ks.length - 1; i > 0; i--) {
+            var j = Math.floor(s.rng() * (i + 1)), t = ks[i]; ks[i] = ks[j]; ks[j] = t;
+          }
+          R.pickMulti(s, ks.slice(0, c.pickCount));
+        } else {
+          R.pickOption(s, s.rng() < 0.5 ? "A" : "B");
+        }
+      } else {
+        var b = R.currentBeat(s);
+        if (b) R.pickBeat(s, s.rng() < 0.5 ? "A" : "B"); else R.nextCard(s);
+      }
+    }
+    return { s: s, rep: R.settle(s) };
+  }
+
+  if (MODE === "collect") {
+    U.renderCollection("all");
+  } else if (MODE === "locked") {
+    U.renderCollection("locked");
+  } else {
+    var r = playOnce(20261101);
+    U.setState(r.s);
+    U.showShareCode(r.rep);
+    if (MODE === "raw") {
+      // 把长图原样铺满，看细节
+      setTimeout(function () {
+        var img = document.querySelector(".share-poster");
+        if (!img) return;
+        document.body.innerHTML = '<img src="' + img.src + '" style="width:100%;display:block">';
+        document.body.style.margin = "0";
+      }, 60);
+    }
+  }
+})();
+</script>
+</body>
+</html>

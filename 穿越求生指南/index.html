@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>穿越求生指南 · 从新石器时代到当代中国</title>
+<meta name="description" content="选一个时代走进去：如果穿越到中国古代某个朝代，怎么活命、怎么用当时的材料造出关键物品、该提前押谁；以及当代中国几次重大机遇的可复制行动清单。纯静态、零构建、双击即开。">
+<link rel="icon" href="../favicon.ico">
+<meta property="og:title" content="穿越求生指南 · 从新石器时代到当代中国">
+<meta property="og:description" content="选一个时代走进去：如果穿越到中国古代某个朝代，怎么活命、怎么用当时的材料造出关键物品、该提前押谁；以及当代中国几次重大机遇的可复制行动清单。纯静态、零构建、双击即开。">
+<meta property="og:image" content="../portal/og-card.png">
+<meta property="og:type" content="website">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="page-hub">
+
+<a class="skip" href="#groups">跳到时代列表</a>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">穿</span>
+      <span class="brand-text">
+        <span class="brand-name">穿越求生指南</span>
+        <span class="brand-sub">从新石器时代到当代中国</span>
+      </span>
+    </a>
+    <div class="topbar-stats" id="topStats"></div>
+    <a class="back-link hub-home" href="../index.html" title="回到总览"><span class="back-ico">←</span>人间三卷</a>
+  </div>
+  <div class="progress"><i id="progressBar"></i></div>
+</header>
+
+<main class="hub">
+
+  <section class="hub-hero">
+    <div class="hub-kicker">FIELD MANUAL · 生存与机遇</div>
+    <h1 class="hub-title">如果睁开眼，<br class="br-desk">你在另一个时代</h1>
+    <p class="hub-lead">
+      这是一本按时代分册的野外手册。每个时代单独一页，讲五件事：
+      <b>怎么活过前三天</b>、<b>你在那儿算哪一种人</b>、
+      <b>当时的政局与哪一年会出事</b>、<b>用当时的材料真的能造出什么</b>、<b>该提前押谁</b>。
+      当代那几册换成同样的格式，讲机遇。
+    </p>
+
+    <div class="pill-row" id="heroStats"></div>
+
+    <div class="searchbox">
+      <span class="search-ico" aria-hidden="true">搜</span>
+      <input id="q" type="search" placeholder="搜索时代、物品、机遇……试试「肥皂」「盐」「铁」「高考」" autocomplete="off" spellcheck="false">
+      <button id="qClear" class="search-clear" type="button" aria-label="清除" hidden>×</button>
+    </div>
+
+    <div class="chips" id="groupChips" role="tablist" aria-label="按分组筛选"></div>
+    <div class="hint" id="qHint" hidden></div>
+  </section>
+
+  <div class="hub-groups" id="groups"></div>
+
+  <div class="empty" id="empty" hidden>
+    <div class="empty-mark">无</div>
+    <p>没有匹配的时代。换个关键词试试「火」「陶」「灌钢」「深圳」。</p>
+  </div>
+
+  <footer class="foot">
+    <p><b>穿越求生指南</b> · 纯静态 / 零构建 / 无数据库 / 无登录 / 不收集任何数据</p>
+    <p>内容与渲染彻底分离：<code>js/</code> 里没有任何时代内容，只读取 <code>ERAS</code>。
+       新增内容 = 在 <code>data/</code> 下新建一个 JS 文件 + 在 <code>js/data-manifest.js</code> 里加一行路径。</p>
+    <p>双击本文件即可阅读，不需要服务器。</p>
+  </footer>
+
+</main>
+
+<button class="to-top" id="toTop" hidden aria-label="回到顶部">↑</button>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<!-- ============ 1. 注册表 ============ -->
+<script src="js/registry.js"></script>
+
+<!-- ============ 2. 数据清单 + 注入器 ============ -->
+<!-- 新增内容只改 js/data-manifest.js，不用碰这里 -->
+<script src="js/data-manifest.js"></script>
+<script src="js/loader.js"></script>
+
+<!-- ============ 3. 渲染层 ============ -->
+<script src="js/core.js"></script>
+<script src="js/home.js"></script>
+</body>
+</html>

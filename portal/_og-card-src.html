@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1200px; height: 630px; overflow: hidden; }
+  body {
+    background: linear-gradient(160deg, #f5efe0 0%, #ece2cc 55%, #e4d6b8 100%);
+    color: #3b3128;
+    font-family: "Noto Serif SC", "Source Han Serif SC", "SimSun", serif;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  /* 纸纹 */
+  body::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background-image: radial-gradient(rgba(120,90,40,.05) 1px, transparent 1px);
+    background-size: 7px 7px;
+  }
+  .frame {
+    position: absolute; inset: 26px;
+    border: 1.5px solid rgba(120,90,40,.35);
+    outline: 6px double rgba(120,90,40,.22); outline-offset: 7px;
+  }
+  .seal {
+    position: absolute; top: 54px; left: 62px;
+    width: 64px; height: 64px; background: #9c2b1e; color: #faf7ee;
+    font-size: 36px; line-height: 64px; text-align: center; border-radius: 6px;
+    box-shadow: 0 3px 10px rgba(120,20,10,.25);
+  }
+  .main { text-align: center; margin-top: -10px; }
+  .kicker { letter-spacing: 14px; font-size: 24px; color: #8a6f4d; margin-bottom: 26px; }
+  h1 { font-size: 118px; letter-spacing: 20px; font-weight: 700; text-indent: 20px; }
+  .rule { width: 210px; height: 2px; background: #9c2b1e; margin: 34px auto 38px; opacity: .7; }
+  .cards { display: flex; justify-content: center; gap: 34px; }
+  .card {
+    width: 280px; padding: 24px 18px 22px;
+    background: rgba(255,252,244,.85);
+    border: 1px solid rgba(120,90,40,.30); border-radius: 8px;
+    box-shadow: 0 4px 14px rgba(90,70,40,.12);
+  }
+  .card .name { font-size: 31px; font-weight: 700; letter-spacing: 4px; }
+  .card .sub { margin-top: 12px; font-size: 17.5px; color: #6d5c44; letter-spacing: 1px; }
+  .foot {
+    position: absolute; bottom: 46px; width: 100%; text-align: center;
+    font-size: 19px; color: #8a6f4d; letter-spacing: 5px;
+  }
+</style>
+</head>
+<body>
+  <div class="frame"></div>
+  <div class="seal">三</div>
+  <div class="main">
+    <div class="kicker">三 卷 · 三 种 活 法</div>
+    <h1>人间三卷</h1>
+    <div class="rule"></div>
+    <div class="cards">
+      <div class="card"><div class="name">穿越求生指南</div><div class="sub">二十一个时代，怎么活下来</div></div>
+      <div class="card"><div class="name">生在何朝</div><div class="sub">秦至清，把一生过完</div></div>
+      <div class="card"><div class="name">如果当时</div><div class="sub">十分钟，看清你放弃了什么</div></div>
+    </div>
+  </div>
+  <div class="foot">你 不 在 此 时 此 地</div>
+</body>
+</html>

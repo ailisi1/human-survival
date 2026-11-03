@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>穿越求生指南 · 时代详情</title>
+<meta name="description" content="恭喜你穿越成功。这一页是这个时代全部需要知道的事：落地须知、政局与机遇、能造什么、致命雷区、行动清单。">
+<link rel="icon" href="../favicon.ico">
+<meta property="og:title" content="穿越求生指南 · 时代详情">
+<meta property="og:description" content="恭喜你穿越成功。这一页是这个时代全部需要知道的事：落地须知、政局与机遇、能造什么、致命雷区、行动清单。">
+<meta property="og:image" content="../portal/og-card.png">
+<meta property="og:type" content="website">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="page-era">
+
+<a class="skip" href="#eraMain">跳到正文</a>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="back-link" href="index.html"><span class="back-ico">←</span>全部时代</a>
+    <div class="crumb" id="crumb"></div>
+    <div class="switches" id="switch"></div>
+    <a class="back-link hub-home" href="../index.html" title="回到总览"><span class="back-ico">←</span>人间三卷</a>
+  </div>
+  <div class="progress"><i id="progressBar"></i></div>
+</header>
+
+<div class="era-layout">
+
+  <aside class="toc" id="toc" aria-label="本页目录"></aside>
+
+  <main class="era-main" id="eraMain" tabindex="-1"></main>
+
+</div>
+
+<button class="to-top" id="toTop" hidden aria-label="回到顶部">↑</button>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<!-- ============ 1. 注册表 ============ -->
+<script src="js/registry.js"></script>
+
+<!-- ============ 2. 数据清单 + 注入器 ============ -->
+<script src="js/data-manifest.js"></script>
+<script src="js/loader.js"></script>
+
+<!-- ============ 3. 渲染层 ============ -->
+<script src="js/core.js"></script>
+<script src="js/era.js"></script>
+</body>
+</html>

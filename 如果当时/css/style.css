@@ -1,0 +1,727 @@
+/* 如果当时 · 视觉样式
+ * 深紫黑底 + 顶部紫光晕 + 磨砂玻璃卡 + 金色/朱红/青绿
+ */
+:root {
+  --bg: #050010;
+  --panel: #08102A;
+  --card: rgba(255, 255, 255, 0.04);
+  --border: rgba(255, 255, 255, 0.08);
+  --gold: #E8C268;
+  --crimson: #E07866;
+  --green: #7DD9A6;
+  --text-primary: #F2F2F2;
+  --text-secondary: #A8A8A8;
+  --text-tertiary: #6B6B6B;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  background: var(--bg);
+  font-family: "Source Han Sans CN", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+}
+
+#app {
+  width: 100%;
+  max-width: 393px;
+  min-height: 100vh;
+  background: var(--bg);
+}
+
+/* 屏幕容器 */
+.screen {
+  position: relative;
+  min-height: 100vh;
+  background: var(--bg);
+  overflow-x: hidden;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 顶部命运光晕 */
+.halo {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 420px;
+  background: radial-gradient(circle at 50% 0%, rgba(107, 64, 153, 0.32) 0%, rgba(107, 64, 153, 0) 60%);
+  pointer-events: none;
+}
+
+/* ===== 首页 ===== */
+.home { align-items: center; justify-content: center; }
+.home-inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  text-align: center;
+}
+.emblem { width: 72px; height: 72px; }
+.emblem svg { width: 100%; height: 100%; }
+.title {
+  font-family: "Source Han Serif CN", "Noto Serif SC", serif;
+  font-size: 56px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+.subtitle { font-size: 17px; color: var(--text-secondary); }
+.desc { font-size: 15px; color: #C9C9C9; line-height: 28px; }
+
+/* 按钮 */
+.btn-gold {
+  width: 100%;
+  padding: 16px 20px;
+  background: var(--gold);
+  color: #1A1206;
+  font-size: 18px;
+  font-weight: 500;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  box-shadow: 0 6px 22px rgba(232, 194, 104, 0.28);
+  transition: transform 0.1s, box-shadow 0.2s;
+}
+.btn-gold:active { transform: scale(0.97); }
+.btn-ghost {
+  width: 100%;
+  padding: 15px 20px;
+  background: transparent;
+  color: #C9C9C9;
+  font-size: 15px;
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 14px;
+  cursor: pointer;
+}
+.hint { font-size: 13px; color: var(--text-tertiary); }
+
+/* 人生码入口按钮（首页） */
+.btn-code {
+  width: 100%;
+  padding: 14px 20px;
+  background: transparent;
+  color: var(--gold);
+  font-size: 14px;
+  border: 1px dashed rgba(232, 194, 104, 0.4);
+  border-radius: 14px;
+  cursor: pointer;
+  letter-spacing: 1px;
+}
+.btn-code:active { opacity: 0.7; }
+
+/* 分享按钮（结算屏） */
+.btn-share {
+  width: 100%;
+  padding: 15px 20px;
+  background: rgba(232, 194, 104, 0.10);
+  color: var(--gold);
+  font-size: 15px;
+  border: 1px solid rgba(232, 194, 104, 0.35);
+  border-radius: 14px;
+  cursor: pointer;
+}
+.btn-share:active { transform: scale(0.98); }
+
+/* ===== 人生码弹层 ===== */
+.code-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+.code-dialog {
+  width: 100%;
+  max-width: 340px;
+  padding: 26px;
+  border-radius: 18px;
+  background: #0B1228;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: center;
+}
+.code-dialog-title {
+  font-family: "Source Han Serif CN", "Noto Serif SC", serif;
+  font-size: 22px;
+  font-weight: 700;
+}
+.code-dialog-sub {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 20px;
+}
+.code-input {
+  width: 100%;
+  padding: 14px;
+  font-size: 20px;
+  text-align: center;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gold);
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(232, 194, 104, 0.4);
+  border-radius: 12px;
+  outline: none;
+}
+.code-input::placeholder { color: #555; letter-spacing: 2px; }
+.code-err { font-size: 12px; color: var(--crimson); min-height: 14px; }
+.code-display {
+  padding: 18px;
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: 6px;
+  color: var(--gold);
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(232, 194, 104, 0.4);
+  border-radius: 12px;
+}
+.code-caption {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+.code-dialog-btns {
+  display: flex;
+  gap: 12px;
+}
+.code-dialog-btns .btn-gold,
+.code-dialog-btns .btn-ghost {
+  flex: 1;
+  padding: 13px 12px;
+  font-size: 14px;
+}
+
+/* ===== 通用内层 ===== */
+.inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+.inner.center { align-items: center; }
+
+/* 进度 */
+.progress-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.round { font-size: 13px; color: var(--gold); font-weight: 500; }
+.age { font-size: 13px; color: var(--text-tertiary); }
+.track {
+  width: 100%;
+  height: 4px;
+  background: rgba(255,255,255,0.10);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.track-fill {
+  height: 100%;
+  background: var(--gold);
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+
+/* ===== 四维数值条 ===== */
+.stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 16px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--card);
+  border: 1px solid var(--border);
+}
+.stat {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.stat-label {
+  flex-shrink: 0;
+  width: 24px;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+.stat-track {
+  flex: 1;
+  min-width: 0;
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.10);
+  overflow: hidden;
+}
+.stat-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.4s ease;
+}
+.stat-val {
+  flex-shrink: 0;
+  width: 22px;
+  text-align: right;
+  font-size: 12px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* 题目卡（磨砂玻璃） */
+.qcard {
+  padding: 24px;
+  border-radius: 16px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.qkicker { font-size: 13px; color: var(--text-tertiary); }
+.qtitle {
+  font-family: "Source Han Serif CN", "Noto Serif SC", serif;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 36px;
+}
+.qbody { font-size: 15px; color: #B5B5B5; line-height: 26px; }
+
+/* 连锁局卡片（命运回响，金色高亮） */
+.qcard-chain {
+  border-color: rgba(232, 194, 104, 0.45);
+  background: rgba(232, 194, 104, 0.06);
+}
+.qcard-chain .qkicker {
+  color: var(--gold);
+  font-weight: 500;
+}
+
+/* 选项 */
+.opts { display: flex; flex-direction: column; gap: 14px; }
+.opt {
+  padding: 20px;
+  border-radius: 14px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: transform 0.1s;
+}
+.opt:active { transform: scale(0.98); }
+.opt-head { display: flex; justify-content: space-between; align-items: center; }
+.opt-tag {
+  width: 40px; height: 26px;
+  border-radius: 13px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 700;
+}
+.opt-title {
+  font-family: "Source Han Serif CN", "Noto Serif SC", serif;
+  font-size: 20px;
+  font-weight: 700;
+}
+.opt-text { font-size: 14px; line-height: 24px; color: #C9C9C9; }
+
+/* A 选项 = 得到（红/朱红） */
+.opt-gain { background: rgba(224, 120, 102, 0.10); border: 1px solid rgba(224, 120, 102, 0.45); }
+.opt-gain .opt-tag { background: rgba(224, 120, 102, 0.9); color: #fff; }
+.opt-gain .opt-gain-label { color: var(--crimson); font-size: 13px; font-weight: 500; }
+
+/* B 选项 = 失去（绿/青绿） */
+.opt-lose { background: rgba(125, 217, 166, 0.10); border: 1px solid rgba(125, 217, 166, 0.45); }
+.opt-lose .opt-tag { background: rgba(125, 217, 166, 0.9); color: #0F1F16; }
+.opt-lose .opt-gain-label { color: var(--green); font-size: 13px; font-weight: 500; }
+
+/* 剧情节拍选项（中性） */
+.beat-opts .beat-opt {
+  padding: 20px;
+  border-radius: 14px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.beat-opt:active { transform: scale(0.98); }
+.beat-opt .opt-title { font-size: 18px; }
+
+/* ===== 多选限选题 ===== */
+.multi-hint {
+  font-size: 14px;
+  color: var(--gold);
+  font-weight: 500;
+  text-align: center;
+}
+.multi-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.multi-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, transform 0.1s;
+}
+.multi-item:active { transform: scale(0.98); }
+.multi-check {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, border-color 0.15s;
+}
+.multi-check::after {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: transparent;
+  transition: background 0.15s;
+}
+.multi-item.selected {
+  border-color: rgba(232, 194, 104, 0.6);
+  background: rgba(232, 194, 104, 0.08);
+}
+.multi-item.selected .multi-check {
+  border-color: var(--gold);
+  background: var(--gold);
+}
+.multi-item.selected .multi-check::after {
+  background: #1A1206;
+}
+.multi-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.multi-name {
+  font-family: "Source Han Serif CN", "Noto Serif SC", serif;
+  font-size: 16px;
+  font-weight: 600;
+}
+.multi-desc {
+  font-size: 13px;
+  color: #9A9A9A;
+  line-height: 20px;
+}
+.multi-tag {
+  flex-shrink: 0;
+  font-size: 11px;
+  color: var(--text-tertiary);
+  padding: 3px 8px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+}
+.multi-confirm:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* ===== 结局 ===== */
+.end-label { font-size: 13px; color: var(--gold); letter-spacing: 1px; }
+.end-title {
+  font-family: "Source Han Serif CN", "Noto Serif SC", serif;
+  font-size: 34px;
+  font-weight: 700;
+  line-height: 48px;
+  text-align: center;
+}
+.end-sub { font-size: 15px; color: #B5B5B5; line-height: 26px; text-align: center; }
+.divider { width: 100%; height: 1px; background: var(--border); }
+
+/* 结局四维数值 */
+.end-stats {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px;
+  border-radius: 14px;
+  background: var(--card);
+  border: 1px solid var(--border);
+}
+.end-stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.end-stat-label {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+.end-stat-val {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.regret-card {
+  width: 100%;
+  padding: 22px;
+  border-radius: 16px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: center;
+}
+.regret-title {
+  font-family: "Source Han Serif CN", "Noto Serif SC", serif;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+}
+.regret-item { font-size: 14px; color: #C9C9C9; text-align: center; }
+.regret-tag {
+  margin-top: 4px;
+  padding: 8px 14px;
+  border-radius: 20px;
+  background: rgba(232, 194, 104, 0.16);
+  color: var(--gold);
+  font-size: 13px;
+}
+
+/* ===== 反向人生对比屏 ===== */
+.versus {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.vs-arrow {
+  text-align: center;
+  color: var(--gold);
+  font-size: 20px;
+  opacity: 0.7;
+}
+.vs-card {
+  width: 100%;
+  padding: 18px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.vs-mine { border-color: rgba(232, 194, 104, 0.35); }
+.vs-alt { border-color: rgba(224, 120, 102, 0.35); }
+.vs-head {
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: var(--text-tertiary);
+}
+.vs-mine .vs-head { color: var(--gold); }
+.vs-alt .vs-head { color: var(--crimson); }
+.vs-title {
+  font-family: "Source Han Serif CN", "Noto Serif SC", serif;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 32px;
+}
+.vs-age { font-size: 13px; color: var(--text-tertiary); }
+.vs-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* ===== 结局收藏图鉴 ===== */
+.collect-progress {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.collect-bar {
+  width: 100%;
+  height: 8px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.10);
+  overflow: hidden;
+}
+.collect-fill {
+  height: 100%;
+  background: var(--gold);
+  border-radius: 4px;
+  transition: width 0.4s ease;
+}
+.collect-count-text {
+  text-align: center;
+  font-size: 13px;
+  color: var(--gold);
+  letter-spacing: 1px;
+}
+.collect-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.collect-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 18px 12px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  text-align: center;
+}
+.collect-card.got {
+  border-color: rgba(232, 194, 104, 0.45);
+  background: rgba(232, 194, 104, 0.06);
+}
+.collect-card.locked {
+  border-style: dashed;
+}
+.collect-card.locked .collect-name {
+  color: rgba(255, 255, 255, 0.28);
+  font-weight: 400;
+}
+.collect-num {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  letter-spacing: 1px;
+}
+.collect-card.got .collect-num { color: var(--gold); }
+.collect-name {
+  font-family: "Source Han Serif CN", "Noto Serif SC", serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+}
+.collect-state {
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+.collect-card.got .collect-state { color: var(--gold); }
+.collect-card.locked .collect-state { color: var(--text-tertiary); }
+
+/* 筛选页签（全部 / 已得 / 未得） */
+.collect-tabs {
+  width: 100%;
+  display: flex;
+  gap: 8px;
+}
+.collect-tab {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 9px 4px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+.collect-tab i {
+  font-style: normal;
+  font-size: 11px;
+  opacity: 0.65;
+}
+.collect-tab.on {
+  border-color: rgba(232, 194, 104, 0.5);
+  color: var(--gold);
+  background: rgba(232, 194, 104, 0.08);
+}
+
+/* 未解锁项只给一句线索，不给名字 */
+.collect-hint {
+  font-size: 12px;
+  line-height: 18px;
+  color: rgba(255, 255, 255, 0.44);
+  letter-spacing: 0.2px;
+}
+.collect-empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-tertiary);
+  padding: 28px 0;
+}
+
+/* 分享长图 */
+.share-dialog {
+  max-height: 92vh;
+  overflow-y: auto;
+}
+/* 三个按钮在窄屏会挤成「复制人生／码」，改成两行：关闭+存图 一行，复制整行 */
+.share-dialog .code-dialog-btns {
+  flex-wrap: wrap;
+}
+.share-dialog .code-dialog-btns button {
+  white-space: nowrap;
+}
+.share-dialog #share-copy {
+  flex: 1 1 100%;
+}
+.share-poster {
+  width: 100%;
+  max-width: 260px;
+  margin: 4px auto 10px;
+  display: block;
+  border-radius: 10px;
+  border: 1px solid rgba(232, 194, 104, 0.25);
+}
+
+/* 解锁横幅 */
+.unlock-banner {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: rgba(232, 194, 104, 0.12);
+  border: 1px solid rgba(232, 194, 104, 0.35);
+  color: var(--gold);
+  font-size: 13px;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+/* 收藏入口按钮的计数 */
+.btn-ghost .collect-count {
+  color: var(--gold);
+  font-weight: 600;
+}

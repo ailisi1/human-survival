@@ -1,0 +1,52 @@
+{
+  "appid": "wx8438cf65f0e357c0",
+  "projectname": "shengzaihechao",
+  "compileType": "game",
+  "libVersion": "3.0.0",
+  "setting": {
+    "urlCheck": false,
+    "es6": true,
+    "enhance": false,
+    "postcss": false,
+    "minified": true,
+    "uglifyFileName": false,
+    "ignoreDevUnusedFiles": false,
+    "ignoreUploadUnusedFiles": false,
+    "compileWorklet": false,
+    "uploadWithSourceMap": true,
+    "packNpmManually": false,
+    "packNpmRelationList": [],
+    "minifyWXSS": true,
+    "minifyWXML": true,
+    "localPlugins": false,
+    "disableUseStrict": false,
+    "useCompilerPlugins": false,
+    "condition": false,
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    }
+  },
+  "condition": {},
+  "simulatorPluginLibVersion": {},
+  "packOptions": {
+    "ignore": [
+      {
+        "type": "folder",
+        "value": "shots"
+      },
+      {
+        "type": "folder",
+        "value": "web"
+      },
+      {
+        "type": "file",
+        "value": "README.md"
+      }
+    ],
+    "include": []
+  },
+  "isGameTourist": false,
+  "editorSetting": {}
+}

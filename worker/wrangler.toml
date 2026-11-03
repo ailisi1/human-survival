@@ -1,0 +1,21 @@
+# 人间三卷 · 访问计数
+# 部署：在本目录执行 npx wrangler deploy
+# 首次需要先 npx wrangler login（浏览器里点授权）
+
+name = "renjian-hit"
+main = "index.js"
+compatibility_date = "2026-01-01"
+
+# KV 命名空间。先执行一次：
+#   npx wrangler kv namespace create HIT
+# 把它打印出来的 id 填到下面，再取消掉 id 那行的注释
+[[kv_namespaces]]
+binding = "HIT"
+id = "在这里填 KV 的 id"
+
+[vars]
+# 允许哪些站点调用。逗号分隔，不写子域通配（代码里已自动带子域）。
+# 部署后把这里换成你的真实域名，例如：
+#   renjian.pages.dev,renjian.example.com
+# 留空等于不检查来源，方便本地调试，正式上线务必填。
+ALLOW_HOSTS = ""

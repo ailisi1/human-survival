@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<title>生在何朝 · 小游戏预览</title>
+<style>
+  html, body {
+    margin: 0; height: 100%; overflow: hidden; background: #f3efe3;
+    font-family: "Songti SC", serif;
+  }
+  /* 固定成一块手机屏，贴左上角。
+     无头浏览器的排版宽度与截图宽度不总是一致，居中或自适应都会把右边切掉。 */
+  canvas {
+    position: absolute; left: 0; top: 0;
+    width: 390px; height: 844px;
+    display: block; background: #f3efe3; touch-action: none;
+  }
+  /* 模拟微信右上角胶囊，只在带 ?cap= 参数时出现 */
+  #cap {
+    position: absolute; display: none;
+    border-radius: 16px; background: rgba(255,255,255,.55);
+    border: 1px solid rgba(0,0,0,.14);
+    font: 12px/32px -apple-system, sans-serif; text-align: center;
+    color: rgba(0,0,0,.5); letter-spacing: 2px;
+  }
+</style>
+</head>
+<body>
+<canvas id="cv"></canvas>
+<div id="cap">··· ⊙</div>
+
+<script src="../js/rng.js"></script>
+<script src="../js/data.base.js"></script>
+<script src="../js/geo.js"></script>
+<script src="../js/era.dsl.js"></script>
+<script src="../js/eras-1.js"></script>
+<script src="../js/eras-2.js"></script>
+<script src="../js/eras-3.js"></script>
+<script src="../js/eras-4.js"></script>
+<!-- PACKS-BEGIN -->
+<script src="../data/packs/00-base.js"></script>
+<script src="../data/packs/01-common-b.js"></script>
+<script src="../data/packs/10-qinhan.js"></script>
+<script src="../data/packs/20-weijin.js"></script>
+<script src="../data/packs/30-song.js"></script>
+<script src="../data/packs/40-yuanqing.js"></script>
+<script src="../data/packs/50-era-qh.js"></script>
+<script src="../data/packs/51-era-wj.js"></script>
+<script src="../data/packs/52-era-song.js"></script>
+<script src="../data/packs/53-era-yq.js"></script>
+<script src="../data/packs/60-era-a.js"></script>
+<script src="../data/packs/61-era-b.js"></script>
+<script src="../data/packs/62-era-c.js"></script>
+<script src="../data/packs/63-era-d.js"></script>
+<script src="../data/packs/64-era-e.js"></script>
+<script src="../data/packs/65-era-f.js"></script>
+<script src="../data/packs/66-common-c.js"></script>
+<script src="../data/packs/70-era-g.js"></script>
+<script src="../data/packs/71-era-h.js"></script>
+<script src="../data/packs/72-era-i.js"></script>
+<script src="../data/packs/73-era-j.js"></script>
+<script src="../data/packs/74-era-k.js"></script>
+<script src="../data/packs/75-era-l.js"></script>
+<script src="../data/packs/76-common-d.js"></script>
+<script src="../data/packs/77-disaster-a.js"></script>
+<script src="../data/packs/78-disaster-b.js"></script>
+<script src="../data/packs/79-era-m.js"></script>
+<script src="../data/packs/80-era-n.js"></script>
+<script src="../data/packs/81-era-o.js"></script>
+<script src="../data/packs/82-era-p.js"></script>
+<script src="../data/packs/83-common-e.js"></script>
+<script src="../data/packs/84-common-f.js"></script>
+<script src="../data/packs/85-common-g.js"></script>
+<script src="../data/packs/86-era-q.js"></script>
+<script src="../data/packs/87-era-r.js"></script>
+<script src="../data/packs/88-era-s.js"></script>
+<script src="../data/packs/89-common-h.js"></script>
+<script src="../data/packs/90-era-t.js"></script>
+<script src="../data/packs/91-era-u.js"></script>
+<script src="../data/packs/92-era-v.js"></script>
+<script src="../data/packs/93-era-w.js"></script>
+<script src="../data/packs/94-common-i.js"></script>
+<!-- PACKS-END -->
+<script src="../data/ming.sample.js"></script>
+<script src="../js/realm.js"></script>
+<script src="../js/engine.js"></script>
+
+<script src="../view/kit.js"></script>
+<script src="../view/screens.js"></script>
+<script src="../view/realm.js"></script>
+<script src="../app.js"></script>
+
+<script>
+(function () {
+  var W = 390, H = 844;
+
+  /* 调试参数：?notch=44&home=34 模拟刘海屏与底部指示条；
+     ?dpr=2 强行指定像素比，用来复现开发者工具那种「2 倍位图挤在 1 倍窗口里」的发虚。 */
+  var q = new URLSearchParams(location.search);
+  var safeT = +(q.get("notch") || 0);
+  var safeB = +(q.get("home") || 0);
+  /* ?cap=96&capb=82 模拟右上角微信胶囊，用来检查顶栏有没有让开 */
+  var capL = +(q.get("cap") || 0);
+  var capB = +(q.get("capb") || 0);
+  var dpr = +(q.get("dpr") || 0) || Math.min(3, window.devicePixelRatio || 2);
+
+  var cv = document.getElementById("cv");
+  cv.width = Math.round(W * dpr);
+  cv.height = Math.round(H * dpr);
+  var ctx = cv.getContext("2d");
+  ctx.scale(dpr, dpr);
+
+  APP.boot({ ctx: ctx, W: W, H: H, dpr: dpr, safeT: safeT, safeB: safeB, capL: capL, capB: capB });
+
+  /* 画一个假胶囊盖在画布上，才能看出顶栏有没有让开 */
+  if (capL > 0 && capB > 0) {
+    var el = document.getElementById("cap");
+    el.style.display = "block";
+    el.style.left = capL + "px";
+    el.style.top = (capB - 32) + "px";
+    el.style.width = "87px";
+    el.style.height = "32px";
+  }
+
+  /* 调试：?demo=birth|event|dead|realm|eras&era=ming&tab=0&seed=5 */
+  var demo = q.get("demo");
+  if (demo) {
+    APP.state.__demo(demo, q.get("era"), +(q.get("seed") || 20261030), +(q.get("tab") || 0));
+  }
+
+  var down = false;
+  function pos(e) {
+    var r = cv.getBoundingClientRect();
+    var t = e.touches ? e.touches[0] : e;
+    return { x: t.clientX - r.left, y: t.clientY - r.top };
+  }
+  function start(e) { e.preventDefault(); down = true; var p = pos(e); APP.touch("start", p.x, p.y); }
+  function move(e) { if (!down) return; e.preventDefault(); var p = pos(e); APP.touch("move", p.x, p.y); }
+  function end(e) { if (!down) return; down = false; var p = pos(e); APP.touch("end", p.x, p.y); }
+
+  cv.addEventListener("mousedown", start);
+  window.addEventListener("mousemove", move);
+  window.addEventListener("mouseup", end);
+  cv.addEventListener("touchstart", start, { passive: false });
+  cv.addEventListener("touchmove", move, { passive: false });
+  cv.addEventListener("touchend", end, { passive: false });
+
+  /* 供无头截图等待用 */
+  window.__READY = true;
+})();
+</script>
+</body>
+</html>
