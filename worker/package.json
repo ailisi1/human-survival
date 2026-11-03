@@ -1,5 +1,8 @@
 {
   "name": "renjian-hit",
   "private": true,
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "wrangler": "^4.156.2"
+  }
 }

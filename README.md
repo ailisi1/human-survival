@@ -284,39 +284,34 @@ cd 人类生存网站 && python -m http.server 8080
 
 ### 上线到 Cloudflare Pages（免费，不需要信用卡）
 
-仓库：<https://github.com/ailisi1/human-survival>（主分支 `main`）
+**线上地址：<https://human-survival.pages.dev>**（2026-11-03 上线）
 
-**方式一 · 连 Git（推荐，改完自动部署）**
+**方式一 · wrangler 命令行直传（当前实际用法）**
 
-1. **注册**：<https://dash.cloudflare.com/sign-up>，邮箱 + 密码 + 邮箱验证。会过一次 Turnstile 人机验证。
-2. **建项目**：左侧 **Compute → Workers & Pages** → 右上角 **Create** → **Pages** 标签 → **Connect to Git**。
-3. **连仓库**：Connect GitHub → 授权 → 选 `human-survival`。列表里看不到就去 GitHub 的
-   *Settings → Applications → Cloudflare* 把仓库加进授权范围。
-4. **构建设置**（Build settings）：
-
-   | 项 | 填什么 |
-   |---|---|
-   | Project name | `human-survival` → 网址 `human-survival.pages.dev` |
-   | Production branch | `main` |
-   | Framework preset | **None** |
-   | Build command | **留空**（纯静态，没有构建步骤） |
-   | Build output directory | `/` |
-
-5. **Save and Deploy**，等 1–2 分钟。以后每次 push 到 `main` 都会自动重新部署。
-
-> 取舍：Git 部署会把**整个仓库**当站点目录，`_retired/`、`tools/`、`worker/` 也会在线上。
-> 没有安全问题（仓库本来公开），只是不干净。想要干净就把 `_deploy` 也提交进仓库，
-> 再把 Pages 的 **Root directory** 设为 `_deploy`（每次更新需先跑打包再提交）。
-
-**方式二 · 拖拽上传（不依赖 GitHub）**
+`_deploy/` 由打包脚本产出，用 wrangler 直接上传为 Pages 项目：
 
 ```bash
-node portal/pack-deploy.js   # 产出 _deploy/
+npm i -D wrangler          # 仅首次，装在 worker/ 目录
+npx wrangler login         # 仅首次，浏览器授权
+node portal/pack-deploy.js # 打包出 _deploy/
+cd worker
+npx wrangler pages deploy ../_deploy --project-name human-survival --branch main --commit-dirty=true
 ```
+
+- 项目创建：`npx wrangler pages project create human-survival --production-branch main`（已建过）
+- `--branch main` 使这次部署成为生产部署，主域名指向它；不带则只出预览域名
+- Dashboard 入口：Compute → Workers & Pages → `human-survival`
+- 新版 dashboard 的「Create application」默认走 **Workers** 流程（有 `npx wrangler deploy`），不是 Pages——认准 **Build output directory** 字段才是 Pages
+
+**方式二 · 网页拖拽（不装命令行时）**
 
 Workers & Pages → Create → Pages → **Upload assets** → 把 **`_deploy` 文件夹本身**拖进上传框 → Deploy。
 ⚠️ 别压成 zip：Windows 右键生成的 zip 用系统编码，中文目录名上传后会乱码、线上 404。
 拖文件夹是浏览器逐个读原文件，中文名原样保留。
+
+**代码同步在 GitHub**：<https://github.com/ailisi1/human-survival>（主分支 `main`，
+仓库协作者 sxhhliu）。仓库用于备份与协作，不参与 Pages 构建；想要「push 即部署」
+需在 Pages 项目 Settings → Git 里另连（当前未连）。
 
 ### 更新内容
 
@@ -326,10 +321,11 @@ Workers & Pages → Create → Pages → **Upload assets** → 把 **`_deploy` �
 node portal/sync.js
 ```
 
-**连 Git 部署**：直接提交推送，Cloudflare 自动重新部署。
+**上线**：提交推送（备份），再 wrangler 直传（部署）：
 
 ```bash
 git add -A && git commit -m "说明改了什么" && git push
+cd worker && npx wrangler pages deploy ../_deploy --project-name human-survival --branch main --commit-dirty=true
 ```
 
 **拖拽部署**：先打包再拖。
@@ -432,7 +428,7 @@ node portal/pack-deploy.js   # 产出 _deploy/
 - [x] 卷三扩题库：95 → 126 道，事件 26 → 30，连锁 12 → 14；补齐婚恋、朋友人情、学业、照护、宠物、返乡、意义、中年八类（见 `如果当时/00-策划案.md` 第十五章）
 - [ ] 访问统计：Worker 部署后要填 `portal/hit.js` 的 `ENDPOINT` 与后台 `ALLOW_HOSTS`（上线前唯一要做的手工活）
 - [x] favicon.ico：`node portal/make-favicon.js` 生成（32×32 朱印，重跑即改）；三站与详情页已加 `<link rel="icon" href="../favicon.ico">`
-- [x] 分享卡片：五页加 og 标签 + `portal/og-card.png`（1200×630，源文件 `portal/_og-card-src.html`，改字后用 Edge 无头 1200×630 重截）。**注意 og:image 现在是相对路径，拿到正式域名后要换成绝对地址**（微信不读 og、抓 title+desc，Telegram/QQ 读 og）
+- [x] 分享卡片：五页加 og 标签 + `portal/og-card.png`（1200×630，源文件 `portal/_og-card-src.html`，改字后用 Edge 无头 1200×630 重截）；og:image / og:url 已是绝对地址（`https://human-survival.pages.dev`，2026-11-03 上线时改的）。微信不读 og、抓 title+desc，Telegram/QQ 读 og
 - [x] 404 页：根目录 `404.html`（Cloudflare Pages 约定自动生效），宣纸风「走岔了」，带回门户
 - [x] 部署包瘦身：剔除 `生在何朝/assets/icon`（1.9 MB 图标废稿）与 `t_check.js`，5.8 MB → 4.1 MB
 - [x] 按 `内容缺口清单.md` 补完：卷二家业 / 科举 / 军功 / 文事 / 人际 / 职业、官府露出率、四朝舆图地名；卷一当代六题、七朝配方、元隋政局、失效章；卷三职场 / 照护 / 钱（详见本节上方三条）
