@@ -1,0 +1,102 @@
+/* 首页：一屏之内只放三样东西——名字、一句问话、一个开始 */
+
+.home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding-top: 40rpx;
+}
+
+/* ---------- 徽记：两道环 + 一枚竖立的碎片 ---------- */
+.emblem {
+  position: relative;
+  width: 150rpx;
+  height: 150rpx;
+  margin-bottom: 34rpx;
+}
+
+.ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1rpx solid rgba(232, 194, 104, 0.42);
+}
+
+.ring-outer {
+  top: 0;
+  left: 0;
+  width: 150rpx;
+  height: 150rpx;
+}
+
+.ring-inner {
+  top: 22rpx;
+  left: 22rpx;
+  width: 106rpx;
+  height: 106rpx;
+  border-color: rgba(232, 194, 104, 0.2);
+}
+
+/* 碎片用胶囊 + 上下收窄的圆角，避免 clip-path 在部分机型不生效 */
+.shard {
+  position: absolute;
+  top: 16rpx;
+  left: 50%;
+  width: 18rpx;
+  height: 118rpx;
+  margin-left: -9rpx;
+  background: linear-gradient(180deg, rgba(232, 194, 104, 0.35) 0%, #e8c268 45%, rgba(232, 194, 104, 0.7) 100%);
+  border-radius: 50% 50% 50% 50% / 42% 42% 42% 42%;
+}
+
+/* ---------- 字 ---------- */
+.title {
+  font-size: 104rpx;
+  font-weight: 700;
+  letter-spacing: 14rpx;
+  text-indent: 14rpx;
+  color: #f5eedc;
+  line-height: 1.2;
+}
+
+.subtitle {
+  margin-top: 20rpx;
+  font-size: 27rpx;
+  letter-spacing: 3rpx;
+  color: rgba(232, 194, 104, 0.82);
+}
+
+.desc {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 62rpx;
+  gap: 14rpx;
+}
+
+.desc-line {
+  font-size: 27rpx;
+  line-height: 1.7;
+  color: rgba(237, 230, 216, 0.66);
+  letter-spacing: 1rpx;
+  text-align: center;
+}
+
+.desc-line.dim {
+  color: rgba(237, 230, 216, 0.42);
+}
+
+/* ---------- 按钮 ---------- */
+.actions {
+  width: 100%;
+  max-width: 620rpx;
+  margin-top: 74rpx;
+}
+
+.hint {
+  margin-top: 40rpx;
+  font-size: 23rpx;
+  letter-spacing: 4rpx;
+  color: rgba(237, 230, 216, 0.3);
+}

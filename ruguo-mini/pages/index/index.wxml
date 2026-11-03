@@ -1,0 +1,27 @@
+<view class="page-bg home">
+  <view class="halo"></view>
+
+  <view class="emblem">
+    <view class="ring ring-outer"></view>
+    <view class="ring ring-inner"></view>
+    <view class="shard"></view>
+  </view>
+
+  <view class="title">如果当时</view>
+  <view class="subtitle">人生的岔路，你敢重走几次？</view>
+
+  <view class="desc">
+    <text class="desc-line">五百万元，还是清华大学？</text>
+    <text class="desc-line">每一次选择，都在悄悄改写你的人生。</text>
+    <text class="desc-line dim">这里没有正确答案，只有你愿意放弃什么。</text>
+  </view>
+
+  <view class="actions">
+    <button class="btn-gold" bindtap="onStart">开始新人生</button>
+    <button class="btn-ghost" bindtap="onCode">输入人生码，重走朋友的路</button>
+    <button class="btn-ghost" bindtap="onCollect">人生收藏 {{collectText}}</button>
+  </view>
+
+  <view class="hint">约 10 分钟 · 一局人生</view>
+  <view class="safe-bottom"></view>
+</view>

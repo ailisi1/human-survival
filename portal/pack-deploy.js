@@ -31,6 +31,7 @@ const SKIP_DIRS = new Set([
   "shots",        // 开发截图存档
   "tools",        // 回归测试、截图脚本
   "minigame",     // 微信小游戏工程，网页不引用
+  "ruguo-mini",   // 卷三的微信小程序工程，网页不引用（走它自己的发布流程）
   "_ai-drafts",   // 图标设计废稿
   "_retired",     // 被重写稿顶掉的旧数据，仅供回溯
   "worker",       // 访问计数的 Cloudflare Worker，单独部署，不进网页产物

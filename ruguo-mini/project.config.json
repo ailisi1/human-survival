@@ -1,0 +1,23 @@
+{
+  "description": "如果当时 · 微信小程序（人生抉择，一局十分钟）",
+  "packOptions": {
+    "ignore": [
+      {
+        "type": "folder",
+        "value": ".workbuddy"
+      }
+    ],
+    "include": []
+  },
+  "setting": {
+    "bundle": false,
+    "es6": true,
+    "minified": true,
+    "postcss": true,
+    "urlCheck": true
+  },
+  "compileType": "miniprogram",
+  "appid": "touristappid",
+  "projectname": "ruguo-mini",
+  "miniprogramRoot": "./"
+}

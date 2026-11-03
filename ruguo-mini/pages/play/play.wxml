@@ -1,0 +1,88 @@
+<view class="page-bg">
+  <view class="halo"></view>
+
+  <!-- 进度 + 四维 -->
+  <view class="progress-row">
+    <text class="round">{{label}}</text>
+    <text class="age">{{age}} 岁</text>
+  </view>
+  <view class="track">
+    <view class="track-fill" style="width:{{pct}}%"></view>
+  </view>
+
+  <view class="stats">
+    <view class="stat" wx:for="{{stats}}" wx:key="label">
+      <text class="stat-label">{{item.label}}</text>
+      <view class="stat-track">
+        <view class="stat-fill" style="width:{{item.w}};background:{{item.color}}"></view>
+      </view>
+      <text class="stat-val">{{item.val}}</text>
+    </view>
+  </view>
+
+  <!-- 卡片本体 -->
+  <view class="qcard {{chain ? 'qcard-chain' : ''}}">
+    <view class="qkicker">{{kicker}}</view>
+    <view class="qtitle" wx:if="{{title}}">{{title}}</view>
+    <view class="qbody" wx:if="{{scene}}">{{scene}}</view>
+  </view>
+
+  <!-- 二选一 -->
+  <view class="opts" wx:if="{{mode === 'card'}}">
+    <view
+      class="opt {{item.side === 'gain' ? 'opt-gain' : 'opt-lose'}}"
+      wx:for="{{opts}}"
+      wx:key="key"
+      data-key="{{item.key}}"
+      bindtap="onPick"
+    >
+      <view class="opt-head">
+        <text class="opt-tag">{{item.tag}}</text>
+        <text class="opt-gain-label">{{item.sideLabel}}</text>
+      </view>
+      <view class="opt-title">{{item.title}}</view>
+      <view class="opt-line" wx:if="{{item.gain}}">{{item.gain}}</view>
+      <view class="opt-line" wx:if="{{item.lose}}">{{item.lose}}</view>
+    </view>
+  </view>
+
+  <!-- 多选限选 -->
+  <view wx:if="{{mode === 'multi'}}">
+    <view class="multi-hint">已选 <text class="num">{{picked}}</text> / {{pickCount}}，其余将被放弃</view>
+
+    <view
+      class="multi-item {{item.on ? 'selected' : ''}}"
+      wx:for="{{multi}}"
+      wx:key="key"
+      data-key="{{item.key}}"
+      bindtap="onToggle"
+    >
+      <view class="multi-check"></view>
+      <view class="multi-body">
+        <view class="multi-name">{{item.name}}</view>
+        <view class="multi-desc" wx:if="{{item.desc}}">{{item.desc}}</view>
+      </view>
+      <text class="multi-tag" wx:if="{{item.tag}}">{{item.tag}}</text>
+    </view>
+
+    <button class="btn-gold multi-confirm" bindtap="onConfirm" disabled="{{picked !== pickCount}}">
+      确认选择
+    </button>
+  </view>
+
+  <!-- 连锁剧情 / 随机事件 -->
+  <view class="opts" wx:if="{{mode === 'beat' || mode === 'event'}}">
+    <view
+      class="beat-opt"
+      wx:for="{{opts}}"
+      wx:key="key"
+      data-key="{{item.key}}"
+      bindtap="onPick"
+    >
+      <view class="opt-title">{{item.title}}</view>
+      <view class="opt-text" wx:if="{{item.text}}">{{item.text}}</view>
+    </view>
+  </view>
+
+  <view class="safe-bottom"></view>
+</view>

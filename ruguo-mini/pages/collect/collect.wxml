@@ -1,0 +1,43 @@
+<view class="page-bg collect">
+  <view class="halo"></view>
+
+  <view class="col-label">你走过的人生</view>
+  <view class="col-title">人生收藏</view>
+  <view class="col-sub">{{total}} 种活法，收到 {{got}} 种。每一种，都有人真的这么过完了一辈子。</view>
+
+  <view class="col-bar">
+    <view class="col-fill" style="width:{{pct}}%"></view>
+  </view>
+  <view class="col-count">已解锁 {{got}} / {{total}} · {{pct}}%</view>
+
+  <view class="tabs">
+    <view
+      class="tab {{filter === item.key ? 'on' : ''}}"
+      wx:for="{{tabs}}"
+      wx:key="key"
+      data-f="{{item.key}}"
+      bindtap="onTab"
+    >
+      <text>{{item.label}}</text>
+      <text class="tab-n">{{item.n}}</text>
+    </view>
+  </view>
+
+  <view class="grid">
+    <view class="cell {{item.got ? 'cell-got' : 'cell-lock'}}" wx:for="{{rows}}" wx:key="num">
+      <text class="cell-num">{{item.num}}</text>
+      <text class="cell-name" wx:if="{{item.got}}">{{item.title}}</text>
+      <text class="cell-name lock" wx:else>？</text>
+      <text class="cell-hint" wx:if="{{item.got}}">已收入</text>
+      <text class="cell-hint" wx:else>{{item.hint}}</text>
+    </view>
+  </view>
+
+  <view class="col-empty" wx:if="{{empty}}">{{empty}}</view>
+
+  <view class="col-actions">
+    <button class="btn-gold" bindtap="onBack">返回</button>
+  </view>
+
+  <view class="safe-bottom"></view>
+</view>

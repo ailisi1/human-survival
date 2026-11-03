@@ -1,0 +1,21 @@
+/* 岔路页：大部分样式在 app.wxss，这里只补页面特有的 */
+
+.page-bg {
+  padding-top: 34rpx;
+}
+
+/* 二选一里 gain / lose 的两行说明，靠左对齐更像条目 */
+.opt-line {
+  margin-top: 10rpx;
+  font-size: 25rpx;
+  line-height: 1.72;
+  color: rgba(237, 230, 216, 0.62);
+}
+
+/* 剧情 / 事件的选项文字 */
+.beat-opt .opt-text {
+  margin-top: 10rpx;
+  font-size: 25rpx;
+  line-height: 1.72;
+  color: rgba(237, 230, 216, 0.58);
+}

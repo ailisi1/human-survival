@@ -1,0 +1,40 @@
+<view class="page-bg end">
+  <view class="halo"></view>
+
+  <view class="end-label">人生走完 · {{age}} 岁</view>
+  <view class="unlock" wx:if="{{isNew}}">新结局已收入「人生收藏」</view>
+
+  <view class="end-title">{{title}}</view>
+  <view class="end-sub">{{commentary}}</view>
+
+  <view class="divider"></view>
+
+  <view class="end-stats">
+    <view class="end-stat" wx:for="{{stats}}" wx:key="label">
+      <text class="end-stat-label">{{item.label}}</text>
+      <text class="end-stat-val" style="color:{{item.color}}">{{item.val}} · {{item.word}}</text>
+    </view>
+  </view>
+
+  <view class="divider"></view>
+
+  <view class="regret-card">
+    <view class="regret-title">这一生，你放弃了</view>
+    <view class="regret-item" wx:for="{{regrets}}" wx:key="*this">{{item}}</view>
+    <view class="regret-tag">{{regrets.length}} 样放弃 · 总价值无法估量</view>
+  </view>
+
+  <view class="code-box" bindtap="onCopyCode">
+    <text class="code-label">人生码</text>
+    <text class="code-val">{{code}}</text>
+    <text class="code-hint">点一下复制，朋友用它重走这一局</text>
+  </view>
+
+  <view class="end-actions">
+    <button class="btn-gold" bindtap="onReplay">再活一次</button>
+    <button class="btn-ghost" bindtap="onCollect">人生收藏</button>
+    <button class="btn-ghost" bindtap="onHome">回到首页</button>
+  </view>
+
+  <view class="safe-bottom"></view>
+</view>

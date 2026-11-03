@@ -1,0 +1,18 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/play/play",
+    "pages/end/end",
+    "pages/collect/collect"
+  ],
+  "window": {
+    "navigationBarTitleText": "如果当时",
+    "navigationBarBackgroundColor": "#050010",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#050010",
+    "backgroundTextStyle": "dark"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}
