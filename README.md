@@ -84,6 +84,9 @@
 
 ## 四、目录说明：哪个文件夹放什么
 
+> 下面标「不上线」指的是**不进 `_deploy` 打包产物**。用 Git 连 Cloudflare 部署时，
+> 整个仓库都会变成站点目录，这些文件也会出现在网址里（无安全影响，仓库是公开的）。
+
 ```
 人类生存网站/
 ├── index.html                 ← 总入口（门户「人间三卷」）
@@ -281,19 +284,62 @@ cd 人类生存网站 && python -m http.server 8080
 
 ### 上线到 Cloudflare Pages（免费，不需要信用卡）
 
+仓库：<https://github.com/ailisi1/human-survival>（主分支 `main`）
+
+**方式一 · 连 Git（推荐，改完自动部署）**
+
 1. **注册**：<https://dash.cloudflare.com/sign-up>，邮箱 + 密码 + 邮箱验证。会过一次 Turnstile 人机验证。
-2. **建项目**：左侧 **Workers & Pages** → **Create application** → **Pages** 标签 → **Get started** → 选 **Upload assets**（不要选 Connect to Git，本仓库不在 GitHub 上）。
-3. **起名**：项目名会成为网址，比如 `renjian3` → `renjian3.pages.dev`。
-4. **拖文件**：把 `_deploy` 文件夹**里面的内容**（不是文件夹本身）拖进上传框，或者先把 `_deploy` 压成 zip 再拖。等它传完，点 **Deploy site**。
-5. **等 1–2 分钟**，`https://项目名.pages.dev` 就能开了。
+2. **建项目**：左侧 **Compute → Workers & Pages** → 右上角 **Create** → **Pages** 标签 → **Connect to Git**。
+3. **连仓库**：Connect GitHub → 授权 → 选 `human-survival`。列表里看不到就去 GitHub 的
+   *Settings → Applications → Cloudflare* 把仓库加进授权范围。
+4. **构建设置**（Build settings）：
+
+   | 项 | 填什么 |
+   |---|---|
+   | Project name | `human-survival` → 网址 `human-survival.pages.dev` |
+   | Production branch | `main` |
+   | Framework preset | **None** |
+   | Build command | **留空**（纯静态，没有构建步骤） |
+   | Build output directory | `/` |
+
+5. **Save and Deploy**，等 1–2 分钟。以后每次 push 到 `main` 都会自动重新部署。
+
+> 取舍：Git 部署会把**整个仓库**当站点目录，`_retired/`、`tools/`、`worker/` 也会在线上。
+> 没有安全问题（仓库本来公开），只是不干净。想要干净就把 `_deploy` 也提交进仓库，
+> 再把 Pages 的 **Root directory** 设为 `_deploy`（每次更新需先跑打包再提交）。
+
+**方式二 · 拖拽上传（不依赖 GitHub）**
+
+```bash
+node portal/pack-deploy.js   # 产出 _deploy/
+```
+
+Workers & Pages → Create → Pages → **Upload assets** → 把 **`_deploy` 文件夹本身**拖进上传框 → Deploy。
+⚠️ 别压成 zip：Windows 右键生成的 zip 用系统编码，中文目录名上传后会乱码、线上 404。
+拖文件夹是浏览器逐个读原文件，中文名原样保留。
 
 ### 更新内容
 
-改了数据之后：
+改了数据之后，先跑一遍核对（会算出最新条数并写 `portal/stats.js`）：
 
 ```bash
-node portal/sync.js && node portal/pack-deploy.js
+node portal/sync.js
 ```
+
+**连 Git 部署**：直接提交推送，Cloudflare 自动重新部署。
+
+```bash
+git add -A && git commit -m "说明改了什么" && git push
+```
+
+**拖拽部署**：先打包再拖。
+
+```bash
+node portal/pack-deploy.js   # 产出 _deploy/
+```
+
+> 注意：仓库里 `.gitignore` 排除了 `_deploy/`（构建产物不入库）与
+> `生在何朝/assets/icon/`（图标废稿）。改数据时别把这两个目录加回来。
 
 然后回到 Cloudflare 项目页 → **Create new deployment** → 重新拖 `_deploy` 的内容。每次部署都会生成新版本，可回滚到任一旧版本。
 
