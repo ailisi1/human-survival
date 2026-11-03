@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>推文封面 · 钩子版</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 900px; height: 383px; overflow: hidden; }
+  body {
+    background: linear-gradient(155deg, #f8f3e7 0%, #f1e8d4 52%, #e7dab9 100%);
+    color: #3b3128;
+    font-family: "Noto Serif SC", "Source Han Serif SC", "SimSun", serif;
+    position: relative;
+  }
+  body::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background-image: radial-gradient(rgba(120,90,40,.055) 1px, transparent 1px);
+    background-size: 6px 6px;
+  }
+  .frame { position: absolute; inset: 16px; border: 1.2px solid rgba(120,90,40,.34);
+           outline: 4px double rgba(120,90,40,.18); outline-offset: 5px; }
+  .wrap { position: absolute; inset: 0; display: flex; flex-direction: column;
+          align-items: center; justify-content: center; }
+  .kicker { font-size: 13.5px; letter-spacing: 9px; color: #9c2b1e; margin-bottom: 20px; text-indent: 9px; }
+  .l1 { font-size: 46px; letter-spacing: 6px; font-weight: 700; }
+  .l2 { font-size: 46px; letter-spacing: 6px; font-weight: 700; margin-top: 10px; color: #9c2b1e; }
+  .rule { width: 150px; height: 2px; background: rgba(120,90,40,.5); margin: 24px auto 18px; }
+  .brand { font-size: 17px; letter-spacing: 5px; color: #5a4a34; }
+  .brand b { font-weight: 700; }
+  .tag { margin-top: 9px; font-size: 13.5px; letter-spacing: 2px; color: #8a6f4d; }
+  .seal { position: absolute; bottom: 30px; right: 34px; width: 42px; height: 42px;
+          background: #9c2b1e; color: #faf7ee; font-size: 24px; line-height: 42px;
+          text-align: center; border-radius: 5px; box-shadow: 0 2px 8px rgba(120,20,10,.22); }
+  .left { position: absolute; bottom: 32px; left: 34px; font-size: 12.5px;
+          color: #9a8560; letter-spacing: 3px; }
+</style>
+</head>
+<body>
+  <div class="frame"></div>
+  <div class="wrap">
+    <div class="kicker">人 间 三 卷</div>
+    <div class="l1">如果把你扔进秦朝</div>
+    <div class="l2">第一件事不是造玻璃</div>
+    <div class="rule"></div>
+    <div class="brand"><b>穿越求生指南</b> · <b>生在何朝</b> · <b>如果当时</b></div>
+    <div class="tag">三卷小站，点开就玩，不用登录</div>
+  </div>
+  <div class="left">human-survival.pages.dev</div>
+  <div class="seal">三</div>
+</body>
+</html>

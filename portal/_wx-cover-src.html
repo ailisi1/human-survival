@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>推文封面 · 品牌版</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 900px; height: 383px; overflow: hidden; }
+  body {
+    background: linear-gradient(155deg, #f8f3e7 0%, #f1e8d4 52%, #e7dab9 100%);
+    color: #3b3128;
+    font-family: "Noto Serif SC", "Source Han Serif SC", "SimSun", serif;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  body::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background-image: radial-gradient(rgba(120,90,40,.055) 1px, transparent 1px);
+    background-size: 6px 6px;
+  }
+  .frame { position: absolute; inset: 16px; border: 1.2px solid rgba(120,90,40,.34);
+           outline: 4px double rgba(120,90,40,.18); outline-offset: 5px; }
+  .seal { position: absolute; top: 30px; left: 34px; width: 46px; height: 46px;
+          background: #9c2b1e; color: #faf7ee; font-size: 26px; line-height: 46px;
+          text-align: center; border-radius: 5px; box-shadow: 0 2px 8px rgba(120,20,10,.22); }
+  .side { position: absolute; top: 34px; right: 34px; text-align: right;
+          font-size: 13px; color: #9a8560; letter-spacing: 3px; line-height: 1.9; }
+  .main { text-align: center; margin-top: 6px; }
+  .kicker { font-size: 14px; letter-spacing: 11px; color: #8a6f4d; margin-bottom: 16px; text-indent: 11px; }
+  h1 { font-size: 78px; letter-spacing: 18px; font-weight: 700; text-indent: 18px; }
+  .rule { width: 130px; height: 2px; background: #9c2b1e; margin: 18px auto 20px; opacity: .72; }
+  .names { font-size: 20px; letter-spacing: 3px; color: #5a4a34; }
+  .names i { color: #9c2b1e; font-style: normal; margin: 0 12px; font-size: 15px; }
+  .sub { margin-top: 14px; font-size: 15px; color: #7d6a4e; letter-spacing: 2px; }
+  .foot { position: absolute; bottom: 26px; width: 100%; text-align: center;
+          font-size: 12.5px; color: #9a8560; letter-spacing: 4px; }
+</style>
+</head>
+<body>
+  <div class="frame"></div>
+  <div class="seal">三</div>
+  <div class="side">点 开 就 玩<br>human-survival.pages.dev</div>
+  <div class="main">
+    <div class="kicker">三卷 · 三种活法</div>
+    <h1>人间三卷</h1>
+    <div class="rule"></div>
+    <div class="names">穿越求生指南<i>◆</i>生在何朝<i>◆</i>如果当时</div>
+    <div class="sub">一本活命手册，一场投胎模拟，一次十分钟的人生重走</div>
+  </div>
+  <div class="foot">不 登 录 · 不 收 集 数 据 · 没 有 排 行 榜</div>
+</body>
+</html>
